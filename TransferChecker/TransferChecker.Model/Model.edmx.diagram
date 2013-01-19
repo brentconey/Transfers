@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6a9b40c1fde842d99b9a7a54763085ff" Name="Diagram1">
+        <EntityTypeShape EntityType="TransferChecker.Model.Company" Width="2.125" PointX="4.875" PointY="2.875" />
+        <EntityTypeShape EntityType="TransferChecker.Model.Station" Width="1.5" PointX="2" PointY="1.25" />
+        <AssociationConnector Association="TransferChecker.Model.FK_Company_Station" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

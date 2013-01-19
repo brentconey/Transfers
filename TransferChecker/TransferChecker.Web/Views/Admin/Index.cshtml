@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<form class="add_form" id="add-station">
+    <h1>Add a station</h1>
+    <fieldset class="group">
+        <h2>Station Number</h2>
+        <input type="text" data-bind="value: stationNumber" />
+    </fieldset>
+    <fieldset class="group">
+        <h2>Station Name</h2>
+        <input type="text" data-bind="value: stationName"/>
+    </fieldset>
+    <a class="button" href="#" data-bind="click: addStation">Add Station</a>
+    <p class="success" id="station-success">Station Added</p>
+</form>
+
+
+<form action="" method="" class="add_form">
+    <h1>Add a firefighter</h1>
+    <fieldset>
+        <h2>Name</h2>
+        <input type="text" name="name" id="name" />
+    </fieldset>
+<fieldset class="group">
+    <fieldset class="group">
+        <h2>Rank</h2>
+        <label for="rank_bc">
+            <input type="radio" id="rank_bc" name="rank[]" />
+            BC
+        </label>
+        <label for="rank_capt">
+            <input type="radio" id="rank_capt" name="rank[]" />
+            CAPT
+        </label>
+        <label for="rank_eng">
+            <input type="radio" id="rank_eng" name="rank[]" />
+            ENG
+        </label>
+        <label for="rank_ff">
+            <input type="radio" id="rank_ff" name="rank[]" />
+            FF
+        </label>
+    </fieldset>
+
+    <fieldset class="group">
+        <h2>Shift</h2>
+        <label for="shift_a">
+            <input type="radio" id="shift_a" name="shift[]" />
+            A
+        </label>
+        <label for="shift_b">
+            <input type="radio" id="shift_b" name="shift[]" />
+            B
+        </label>
+        <label for="shift_c">
+            <input type="radio" id="shift_c" name="shift[]" />
+            C
+        </label>
+        <label for="shift_d">
+            <input type="radio" id="shift_d" name="shift[]" />
+            D
+        </label>
+    </fieldset>
+</fieldset>
+
+    <a class="button" href="#">Add Firefighter</a>
+
+</form>
+
+<script src="~/Scripts/Stations/AddStation.js"></script>
