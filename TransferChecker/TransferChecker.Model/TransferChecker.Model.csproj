@@ -48,6 +48,8 @@
     <Compile Include="Company.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Custom\TransferEntities.cs" />
+    <Compile Include="JsonEntities\JsonStation.cs" />
     <Compile Include="Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

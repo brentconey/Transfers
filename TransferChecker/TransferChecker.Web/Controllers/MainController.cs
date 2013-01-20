@@ -16,7 +16,7 @@ namespace TransferChecker.Web.Controllers
 
         public ActionResult Index()
         {
-            return View(db);
+            return View(db.Stations);
         }
 
 

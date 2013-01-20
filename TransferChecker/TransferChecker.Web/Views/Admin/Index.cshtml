@@ -1,72 +1,152 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Administration";
 }
+<script type="text/javascript">
+    $(function () {
+        $("#add-company").hide();
+        $("#add-firefighter").hide();
+        $("#tabs li").click(function (e) {
+            var formToShow = $(this).html();
+            switch (formToShow) {
+                case "Stations":
+                    $("#add-company").hide();
+                    $("#add-firefighter").hide();
+                    $("#add-station").show();
+                    $("#tabs li").removeClass("selected");
+                    $(this).addClass("selected");
+                    break;
+                case "Companies":
+                    $("#add-firefighter").hide();
+                    $("#add-station").hide();
+                    $("#add-company").show();
+                    $("#tabs li").removeClass("selected");
+                    $(this).addClass("selected");
+                    break;
+                case "Personnel":
+                    $("#add-station").hide();
+                    $("#add-company").hide();
+                    $("#add-firefighter").show();
+                    $("#tabs li").removeClass("selected");
+                    $(this).addClass("selected");
+                    break;
+            }
+            e.stopPropagation();
+        });
+    });
+    //Global container for a station
+    //This is because the list of stations is used in multiple places.
+    function Station(station) {
+        this.stationId = station.Id;
+        this.stationName = station.Name;
+    }
+    var GlobalStationsArray = ko.observableArray();
+    $.getJSON("/GetStations", function (data) {
+        $.each(data, function (key, station) {
+            GlobalStationsArray.push(new Station(station));
+        });
+    });
+</script>
+<div id="main">
+    <h1>Administration</h1>
+    <ul id="tabs">
+        <li class="selected">Stations</li>
+        <li>Companies</li>
+        <li>Personnel</li>
+    </ul>
+    <div id="content">
+        <form class="add_form" id="add-station">
+            <h1>Add a station</h1>
+            <fieldset class="group">
+                <h2>Station Number (ex 02)</h2>
+                <input type="text" data-bind="value: stationNumber" />
+            </fieldset>
+            <fieldset class="group">
+                <h2>Station Name</h2>
+                <input type="text" data-bind="value: stationName"/>
+            </fieldset>
+            <a class="button" data-bind="click: addStation">Add Station</a>
+            <p class="success" id="station-success">Station Added</p>
+        </form>
 
-<form class="add_form" id="add-station">
-    <h1>Add a station</h1>
-    <fieldset class="group">
-        <h2>Station Number</h2>
-        <input type="text" data-bind="value: stationNumber" />
-    </fieldset>
-    <fieldset class="group">
-        <h2>Station Name</h2>
-        <input type="text" data-bind="value: stationName"/>
-    </fieldset>
-    <a class="button" href="#" data-bind="click: addStation">Add Station</a>
-    <p class="success" id="station-success">Station Added</p>
-</form>
+        <form class="add_form" id="add-company">
+            <h1>Add a company</h1>
+            <fieldset class="group">
+                <h2>Company Name (ex Truck 1)</h2>
+                <input type="text" data-bind="value: companyName" />
+            </fieldset>
+            <fieldset class="group">
+               <h2>Company Station</h2>
+                <select data-bind="optionsCaption: 'Select a Station', options: stations, optionsText: 'stationName', optionsValue: 'stationId', value: selectedStation"></select>
+            </fieldset>
+            <fieldset class="group">
+                <h2>Number of Positions</h2>
+                <select data-bind="value: numOfPositions">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                </select>
+            </fieldset>
 
+            <a class="button" data-bind="click: addCompany">Add Company</a>
+            <p class="success" id="company-success">Company Added</p>
+        </form>
+        <form class="add_form" id="add-firefighter">
+            <h1>Add a firefighter</h1>
+            <fieldset>
+                <h2>Name</h2>
+                <input type="text" name="name" id="name" />
+            </fieldset>
+        <fieldset class="group">
+            <fieldset class="group">
+                <h2>Rank</h2>
+                <label for="rank_bc">
+                    <input type="radio" id="rank_bc" name="rank[]" />
+                    BC
+                </label>
+                <label for="rank_capt">
+                    <input type="radio" id="rank_capt" name="rank[]" />
+                    CAPT
+                </label>
+                <label for="rank_eng">
+                    <input type="radio" id="rank_eng" name="rank[]" />
+                    ENG
+                </label>
+                <label for="rank_ff">
+                    <input type="radio" id="rank_ff" name="rank[]" />
+                    FF
+                </label>
+            </fieldset>
 
-<form action="" method="" class="add_form">
-    <h1>Add a firefighter</h1>
-    <fieldset>
-        <h2>Name</h2>
-        <input type="text" name="name" id="name" />
-    </fieldset>
-<fieldset class="group">
-    <fieldset class="group">
-        <h2>Rank</h2>
-        <label for="rank_bc">
-            <input type="radio" id="rank_bc" name="rank[]" />
-            BC
-        </label>
-        <label for="rank_capt">
-            <input type="radio" id="rank_capt" name="rank[]" />
-            CAPT
-        </label>
-        <label for="rank_eng">
-            <input type="radio" id="rank_eng" name="rank[]" />
-            ENG
-        </label>
-        <label for="rank_ff">
-            <input type="radio" id="rank_ff" name="rank[]" />
-            FF
-        </label>
-    </fieldset>
+            <fieldset class="group">
+                <h2>Shift</h2>
+                <label for="shift_a">
+                    <input type="radio" id="shift_a" name="shift[]" />
+                    A
+                </label>
+                <label for="shift_b">
+                    <input type="radio" id="shift_b" name="shift[]" />
+                    B
+                </label>
+                <label for="shift_c">
+                    <input type="radio" id="shift_c" name="shift[]" />
+                    C
+                </label>
+                <label for="shift_d">
+                    <input type="radio" id="shift_d" name="shift[]" />
+                    D
+                </label>
+            </fieldset>
+        </fieldset>
 
-    <fieldset class="group">
-        <h2>Shift</h2>
-        <label for="shift_a">
-            <input type="radio" id="shift_a" name="shift[]" />
-            A
-        </label>
-        <label for="shift_b">
-            <input type="radio" id="shift_b" name="shift[]" />
-            B
-        </label>
-        <label for="shift_c">
-            <input type="radio" id="shift_c" name="shift[]" />
-            C
-        </label>
-        <label for="shift_d">
-            <input type="radio" id="shift_d" name="shift[]" />
-            D
-        </label>
-    </fieldset>
-</fieldset>
+            <a class="button" href="#">Add Firefighter</a>
 
-    <a class="button" href="#">Add Firefighter</a>
-
-</form>
-
+        </form>
+        </div>
+<!-- end main -->
+</div>
 <script src="~/Scripts/Stations/AddStation.js"></script>
+<script src="~/Scripts/Companies/AddCompany.js"></script>

@@ -7,6 +7,7 @@ MASTHEAD - VARIABLE DECLARATIONS
 */
 @notification			:		#d63232;
 @lite-gray				:		#e5e5e5;
+@darker-gray            :       #A0A0A0;
 @text					:		#222222;
 	@text-lite			:		#777777;
 	@text-med			:		#444444;
@@ -17,33 +18,29 @@ MASTHEAD - VARIABLE DECLARATIONS
 
 html, body {width:100%;height:100%;}
 body {font-family:@font;color:@text;font-size:100%;}
-
+a {
+    cursor: pointer;
+}
 h1 {font-size:24px;font-weight:bold;margin:0 0 20px 0;padding:0 0 20px 0;border-bottom:1px solid #999;}
 
 input[type="text"],
 input[type="password"] {box-sizing:border-box;width:100%;padding:8px;font-size:18px;font-weight:bold;border:1px solid #999;border-radius:3px;box-shadow:inset 0 1px 3px rgba(0,0,0,.15);}
 
-.pane {float:left;box-sizing:border-box;height:100%;border-right:1px solid @lite-gray;}
-	.pane ul {}
-		.pane ul > li {font-size:12px;color:@text-lite;padding:8px 20px;border-bottom:1px solid @lite-gray;cursor:pointer;}
-		.pane ul > li:hover {color:@text;}
-
-.notification {display:inline-block;width:16px;height:16px;text-align:center;line-height:16px;font-size:11px;color:#fff;font-weight:bold;background:@notification;border-radius:3px;float:right;position:relative;top:-2px;}
-
-.stations {width:15%;}
-	.stations li {background:#f8f8f8;}
-		.stations li.selected {background:#fff;position:relative;top:0;left:1px;font-weight:bold;color:@text;}
-.units {width:25%;padding-left:20px;}
-	.units li {padding:12px;font-size:14px;}
-		.units li.selected {font-weight:bold;color:@text;}
-.personnel {width:60%;}
 
 header {background:#333;}
 	header .pane {border-color:transparent;}
 	header h2 {color:@text-lite;font-weight:bold;font-size:13px;padding:20px;}
 		header h2.selected {color:#fff;text-shadow:0 1px 0 rgba(0,0,0,.9);}
 .success { text-align: center; background-color: #3FD155; padding: 2px; color: white; padding-top: 5px; padding-bottom: 5px;}
-.add_form {width:310px;margin:40px;padding:20px;border:1px solid #999;border-radius:4px;}
+#main {width: 960px; margin-top: 20px; padding: 10px; margin-left: 15px;}
+#tabs li{display: inline; padding: 8px; border-top: 1px solid; border-left: 1px solid; border-right: 1px solid; background-color: @lite-gray; cursor:pointer;}
+    #tabs li.selected {
+        background-color: @darker-gray;
+    }
+#content form{
+    float: left;
+}
+.add_form {width:510px;padding:20px;border:1px solid #999;border-radius:4px; }
 	.add_form h2 {font-weight:bold;font-size:13px;padding-bottom:5px;}
 	.add_form .group {padding:20px 0;}
 	.add_form .group label {float:left;width:50%;border:1px solid #aaa;background:#eee;cursor:pointer;text-align:center;font-weight:bold;border-radius:3px;box-shadow:inset 0 1px 0 rgba(255,255,255,.9);padding:8px;}

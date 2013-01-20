@@ -20,12 +20,27 @@ namespace TransferChecker.Web.Controllers
             return View();
         }
 
+        [HttpPost]
         public ActionResult AddStation(Station st)
         {
             st.DateAdded = DateTime.Now;
             db.Stations.Add(st);
+            db.SaveChanges();
+            return Json(st, JsonRequestBehavior.DenyGet);
+        }
 
-            return Json(db.SaveChanges(), JsonRequestBehavior.DenyGet);
+        [HttpPost]
+        public ActionResult AddCompany(Company c)
+        {
+            c.DateAdded = DateTime.Now;
+            db.Companies.Add(c);
+            db.SaveChanges();
+            return Json(c, JsonRequestBehavior.DenyGet);
+        }
+
+        public ActionResult GetStations()
+        {
+            return Json(db.GetStationsJSON(), JsonRequestBehavior.AllowGet);
         }
 
     }

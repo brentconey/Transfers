@@ -12,12 +12,20 @@ function AddStationViewModel() {
                 type: "POST",
                 url: "/AddStation",
                 data: { Number: self.stationNumber(), Name: self.stationName() },
-                success: function (data) {
-                    if (data == 1) {
+                success: function (station) {
+                    console.log(station);
+                    if (station.Id != 0) {
                         $("#station-success").slideDown().delay(1000).slideUp();
                         self.stationName('');
                         self.stationNumber('');
+                        GlobalStationsArray.push(new Station(station));
+                    } else {
+                        alert("No station was added.");
                     }
+                },
+                error: function (data) {
+                    alert("An Error Occured");
+                    console.log(data);
                 }
             });
         } else {

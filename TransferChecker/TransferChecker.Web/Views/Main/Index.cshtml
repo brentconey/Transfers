@@ -1,3 +1,9 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
+@model IEnumerable<TransferChecker.Model.Station>
+
+@foreach (var station in Model)
+{
+    <p>@station.Name</p>
+}
