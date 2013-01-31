@@ -38,6 +38,15 @@ namespace TransferChecker.Web.Controllers
             return Json(c, JsonRequestBehavior.DenyGet);
         }
 
+        [HttpPost]
+        public ActionResult AddBattalion(Battalion b)
+        {
+            b.DateAdded = DateTime.Now;
+            db.Battalions.Add(b);
+            db.SaveChanges();
+            return Json(b, JsonRequestBehavior.DenyGet);
+        }
+
         public ActionResult GetStations()
         {
             return Json(db.GetStationsJSON(), JsonRequestBehavior.AllowGet);

@@ -58,6 +58,7 @@
   <ItemGroup>
     <Build Include="Station.sql" />
     <Build Include="Company.sql" />
+    <Build Include="Battalion.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DataScripts\Companies.PostDeployment.sql" />

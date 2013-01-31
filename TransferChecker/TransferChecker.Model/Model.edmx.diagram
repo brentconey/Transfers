@@ -8,6 +8,8 @@
         <EntityTypeShape EntityType="TransferChecker.Model.Company" Width="2.125" PointX="4.875" PointY="2.875" />
         <EntityTypeShape EntityType="TransferChecker.Model.Station" Width="1.5" PointX="2" PointY="1.25" />
         <AssociationConnector Association="TransferChecker.Model.FK_Company_Station" />
+        <EntityTypeShape EntityType="TransferChecker.Model.Battalion" Width="1.5" PointX="9.75" PointY="1.125" />
+        <AssociationConnector Association="TransferChecker.Model.FK_Station_ToBattalion" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -1,37 +1,205 @@
 ﻿@{
     ViewBag.Title = "Administration";
 }
+
+<div class="container">
+    <div class="page-header">
+        <h1>Transfers App <small>Administration</small></h1>
+    </div>
+    <div class="row-fluid">
+        <div class="tababble tabs-left">
+            <ul class="nav nav-tabs" id="side-tabs">
+                <li class="active" id="battalion-link"><a href="#">Battalions</a></li>
+                <li id="station-link"><a href="#">Stations</a></li>
+                <li id="company-link"><a href="#">Compaines</a></li>
+                <li id="firefighter-link"><a href="#">Firefighters</a></li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div id="battalion-form" class="well">
+                <ul class="nav nav-pills" id="battalion-tabs">
+                    <li class="active" id="new-battalion"><a href="#">Add New Battalion</a></li>
+                    <li id="view-battalions"><a href="#">View Battalions</a></li>
+                </ul>
+                <div id="add-battalion">
+                    <form>
+                        <fieldset>
+                            <legend>Add Battalion</legend>
+                            <label>Battalion name</label>
+                            <input type="text" data-bind="value: battalionName" placeholder="Name..." />
+                            <div>
+                                <button class="btn" type="submit" data-bind="click: addBattalion">Save Battalion</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <div class="alert alert-success" id="battalion-success">
+                        <strong>Success</strong> The Battalion has been saved.
+                    </div>
+                </div><!-- end add-battalion -->
+                <div id="battalion-table">
+                    <h3>Battalions</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Battalion 1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div><!-- end battalion-table -->
+            </div><!-- end battalion-form -->
+            <div id="station-form">
+                <form class="well">
+                    <fieldset>
+                        <legend>Add Station</legend>
+                        <label>Battalion</label>
+                        <select>
+                            <option>Batallion 1</option>
+                            <option>Batallion 2</option>
+                        </select>
+                        <label>Station Number</label>
+                            <input type="text" placeholder="Number..." />
+                        <label>Station Name</label>
+                            <input type="text" placeholder="Name..." />
+                        <div>
+                            <button class="btn" type="submit">Save Station</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div><!-- end station-form -->
+            <div id="company-form">
+                <form class="well">
+                    <fieldset>
+                        <legend>Add Company</legend>
+                        <label>Station</label>
+                        <select data-bind="optionsCaption: 'Select a Station', options: stations, optionsText: 'stationName', optionsValue: 'stationId', value: selectedStation"></select>
+                        <label>Positions per shift</label>
+                        <select>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                        </select>
+                        <label>Company Name</label>
+                        <input type="text" placeholder="Name..." />
+                        <div>
+                            <button class="btn" type="submit">Save Company</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div><!-- end company-form -->
+            <div id="firefighter-form">
+                <form class="well">
+                    <fieldset>
+                        <legend>Add Firefighter</legend>
+                        <label>Name</label>
+                        <input type="text" placeholder="Name..." />
+                        <label>Rank</label>
+                        <label class="radio">
+                            <input type="radio" id="rank_bc" name="rank[]" />
+                            BC
+                        </label>
+                        <label class="radio">
+                            <input type="radio" id="rank_capt" name="rank[]" />
+                            CAPT
+                        </label>
+                        <label class="radio">
+                            <input type="radio" id="rank_eng" name="rank[]" />
+                            ENG
+                        </label>
+                        <label class="radio">
+                            <input type="radio" id="rank_ff" name="rank[]" />
+                            FF
+                        </label>
+                        <label>Shift</label>
+                        <label class="radio">
+                            <input type="radio" id="shift_a" name="shift[]" />
+                            A
+                        </label>
+                        <label class="radio">
+                            <input type="radio" id="shift_b" name="shift[]" />
+                            B
+                        </label>
+                        <label class="radio">
+                            <input type="radio" id="shift_c" name="shift[]" />
+                            C
+                        </label>
+                        <div>
+                            <button class="btn" type="submit">Save Firefighter</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div><!-- end firefighter-form -->
+        </div><!-- end tab-content -->
+    </div><!-- end row-fluid -->
+</div>
 <script type="text/javascript">
     $(function () {
-        $("#add-company").hide();
-        $("#add-firefighter").hide();
-        $("#tabs li").click(function (e) {
-            var formToShow = $(this).html();
-            switch (formToShow) {
-                case "Stations":
-                    $("#add-company").hide();
-                    $("#add-firefighter").hide();
-                    $("#add-station").show();
-                    $("#tabs li").removeClass("selected");
-                    $(this).addClass("selected");
-                    break;
-                case "Companies":
-                    $("#add-firefighter").hide();
-                    $("#add-station").hide();
-                    $("#add-company").show();
-                    $("#tabs li").removeClass("selected");
-                    $(this).addClass("selected");
-                    break;
-                case "Personnel":
-                    $("#add-station").hide();
-                    $("#add-company").hide();
-                    $("#add-firefighter").show();
-                    $("#tabs li").removeClass("selected");
-                    $(this).addClass("selected");
-                    break;
-            }
+        //Main tabs
+        $("#station-form").hide();
+        $("#company-form").hide();
+        $("#firefighter-form").hide();
+        $("#side-tabs.nav li a").click(function (e) {
+            ShowHideMainTabs($(this).parent("li"));
             e.stopPropagation();
         });
+        //Battalion tabs
+        $("#battalion-table").hide();
+        $("#battalion-tabs.nav-pills li a").click(function (e) {
+            $("#battalion-tabs.nav-pills li").removeClass("active");
+            var $clickedListItem = $(this).parent("li");
+            $clickedListItem.addClass("active");
+            switch ($clickedListItem.attr("id")) {
+                case "new-battalion":
+                    $("#battalion-table").hide();
+                    $("#add-battalion").show();
+                    break;
+                case "view-battalions":
+                    $("#add-battalion").hide();
+                    $("#battalion-table").show();
+                    break;
+            }
+        });
+
+        function ShowHideMainTabs($clickedListItem) {
+            var link = $clickedListItem.attr("id");
+            $("#side-tabs.nav li").removeClass("active");
+            $clickedListItem.addClass("active");
+            switch (link) {
+                case "battalion-link":
+                    $("#station-form").hide();
+                    $("#company-form").hide();
+                    $("#firefighter-form").hide();
+                    $("#battalion-form").show();
+                    break;
+                case "station-link":
+                    $("#company-form").hide();
+                    $("#firefighter-form").hide();
+                    $("#battalion-form").hide();
+                    $("#station-form").show();
+                    break;
+                case "company-link":
+                    $("#firefighter-form").hide();
+                    $("#battalion-form").hide();
+                    $("#station-form").hide();
+                    $("#company-form").show();
+                    break;
+                case "firefighter-link":
+                    $("#battalion-form").hide();
+                    $("#station-form").hide();
+                    $("#company-form").hide();
+                    $("#firefighter-form").show();
+            }
+        }
     });
     //Global container for a station
     //This is because the list of stations is used in multiple places.
@@ -46,107 +214,7 @@
         });
     });
 </script>
-<div id="main">
-    <h1>Administration</h1>
-    <ul id="tabs">
-        <li class="selected">Stations</li>
-        <li>Companies</li>
-        <li>Personnel</li>
-    </ul>
-    <div id="content">
-        <form class="add_form" id="add-station">
-            <h1>Add a station</h1>
-            <fieldset class="group">
-                <h2>Station Number (ex 02)</h2>
-                <input type="text" data-bind="value: stationNumber" />
-            </fieldset>
-            <fieldset class="group">
-                <h2>Station Name</h2>
-                <input type="text" data-bind="value: stationName"/>
-            </fieldset>
-            <a class="button" data-bind="click: addStation">Add Station</a>
-            <p class="success" id="station-success">Station Added</p>
-        </form>
-
-        <form class="add_form" id="add-company">
-            <h1>Add a company</h1>
-            <fieldset class="group">
-                <h2>Company Name (ex Truck 1)</h2>
-                <input type="text" data-bind="value: companyName" />
-            </fieldset>
-            <fieldset class="group">
-               <h2>Company Station</h2>
-                <select data-bind="optionsCaption: 'Select a Station', options: stations, optionsText: 'stationName', optionsValue: 'stationId', value: selectedStation"></select>
-            </fieldset>
-            <fieldset class="group">
-                <h2>Number of Positions</h2>
-                <select data-bind="value: numOfPositions">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                </select>
-            </fieldset>
-
-            <a class="button" data-bind="click: addCompany">Add Company</a>
-            <p class="success" id="company-success">Company Added</p>
-        </form>
-        <form class="add_form" id="add-firefighter">
-            <h1>Add a firefighter</h1>
-            <fieldset>
-                <h2>Name</h2>
-                <input type="text" name="name" id="name" />
-            </fieldset>
-        <fieldset class="group">
-            <fieldset class="group">
-                <h2>Rank</h2>
-                <label for="rank_bc">
-                    <input type="radio" id="rank_bc" name="rank[]" />
-                    BC
-                </label>
-                <label for="rank_capt">
-                    <input type="radio" id="rank_capt" name="rank[]" />
-                    CAPT
-                </label>
-                <label for="rank_eng">
-                    <input type="radio" id="rank_eng" name="rank[]" />
-                    ENG
-                </label>
-                <label for="rank_ff">
-                    <input type="radio" id="rank_ff" name="rank[]" />
-                    FF
-                </label>
-            </fieldset>
-
-            <fieldset class="group">
-                <h2>Shift</h2>
-                <label for="shift_a">
-                    <input type="radio" id="shift_a" name="shift[]" />
-                    A
-                </label>
-                <label for="shift_b">
-                    <input type="radio" id="shift_b" name="shift[]" />
-                    B
-                </label>
-                <label for="shift_c">
-                    <input type="radio" id="shift_c" name="shift[]" />
-                    C
-                </label>
-                <label for="shift_d">
-                    <input type="radio" id="shift_d" name="shift[]" />
-                    D
-                </label>
-            </fieldset>
-        </fieldset>
-
-            <a class="button" href="#">Add Firefighter</a>
-
-        </form>
-        </div>
-<!-- end main -->
-</div>
-<script src="~/Scripts/Stations/AddStation.js"></script>
+<script src="~/Scripts/Battalions/AddBattalion.js"></script>
+@*<script src="~/Scripts/Stations/AddStation.js"></script>
 <script src="~/Scripts/Companies/AddCompany.js"></script>
+<script src="~/Scripts/Firefighters/AddFirefighter.js"></script>*@

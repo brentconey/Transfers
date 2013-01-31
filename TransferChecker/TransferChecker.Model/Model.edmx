@@ -6,13 +6,26 @@
     <edmx:StorageModels>
     <Schema Namespace="TransferChecker.Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="TransferCheckerModelStoreContainer">
+          <EntitySet Name="Battalion" EntityType="TransferChecker.Model.Store.Battalion" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Company" EntityType="TransferChecker.Model.Store.Company" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Station" EntityType="TransferChecker.Model.Store.Station" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK_Company_Station" Association="TransferChecker.Model.Store.FK_Company_Station">
             <End Role="Station" EntitySet="Station" />
             <End Role="Company" EntitySet="Company" />
           </AssociationSet>
+          <AssociationSet Name="FK_Station_ToBattalion" Association="TransferChecker.Model.Store.FK_Station_ToBattalion">
+            <End Role="Battalion" EntitySet="Battalion" />
+            <End Role="Station" EntitySet="Station" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Battalion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="250" />
+          <Property Name="DateAdded" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Company">
           <Key>
             <PropertyRef Name="Id" />
@@ -28,6 +41,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="BattalionId" Type="int" Nullable="false" />
           <Property Name="Number" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="250" />
           <Property Name="DateAdded" Type="datetime" Nullable="false" />
@@ -44,6 +58,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Station_ToBattalion">
+          <End Role="Battalion" Type="TransferChecker.Model.Store.Battalion" Multiplicity="1" />
+          <End Role="Station" Type="TransferChecker.Model.Store.Station" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Battalion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Station">
+              <PropertyRef Name="BattalionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -54,6 +80,11 @@
           <AssociationSet Name="FK_Company_Station" Association="TransferChecker.Model.FK_Company_Station">
             <End Role="Station" EntitySet="Stations" />
             <End Role="Company" EntitySet="Companies" />
+          </AssociationSet>
+          <EntitySet Name="Battalions" EntityType="TransferChecker.Model.Battalion" />
+          <AssociationSet Name="FK_Station_ToBattalion" Association="TransferChecker.Model.FK_Station_ToBattalion">
+            <End Role="Battalion" EntitySet="Battalions" />
+            <End Role="Station" EntitySet="Stations" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Company">
@@ -76,6 +107,8 @@
           <Property Type="String" Name="Name" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Type="DateTime" Name="DateAdded" Nullable="false" Precision="3" />
           <NavigationProperty Name="Companies" Relationship="TransferChecker.Model.FK_Company_Station" FromRole="Station" ToRole="Company" />
+          <Property Type="Int32" Name="BattalionId" Nullable="false" />
+          <NavigationProperty Name="Battalion" Relationship="TransferChecker.Model.FK_Station_ToBattalion" FromRole="Station" ToRole="Battalion" />
         </EntityType>
         <Association Name="FK_Company_Station">
           <End Type="TransferChecker.Model.Station" Role="Station" Multiplicity="1" />
@@ -86,6 +119,27 @@
             </Principal>
             <Dependent Role="Company">
               <PropertyRef Name="StationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Battalion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Stations" Relationship="TransferChecker.Model.FK_Station_ToBattalion" FromRole="Battalion" ToRole="Station" />
+          <Property Type="DateTime" Name="DateAdded" Nullable="false" Precision="3" />
+        </EntityType>
+        <Association Name="FK_Station_ToBattalion">
+          <End Type="TransferChecker.Model.Battalion" Role="Battalion" Multiplicity="1" />
+          <End Type="TransferChecker.Model.Station" Role="Station" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Battalion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Station">
+              <PropertyRef Name="BattalionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -109,9 +163,19 @@
           <EntitySetMapping Name="Stations">
             <EntityTypeMapping TypeName="TransferChecker.Model.Station">
               <MappingFragment StoreEntitySet="Station">
+                <ScalarProperty Name="BattalionId" ColumnName="BattalionId" />
                 <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Battalions">
+            <EntityTypeMapping TypeName="TransferChecker.Model.Battalion">
+              <MappingFragment StoreEntitySet="Battalion">
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

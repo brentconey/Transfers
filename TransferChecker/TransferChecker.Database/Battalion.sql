@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[Battalion]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY,
+	[Name] NVARCHAR(250) NOT NULL, 
+    [DateAdded] DATETIME NOT NULL
+)

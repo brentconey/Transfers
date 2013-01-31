@@ -27,5 +27,6 @@ namespace TransferChecker.Model
     
         public DbSet<Company> Companies { get; set; }
         public DbSet<Station> Stations { get; set; }
+        public DbSet<Battalion> Battalions { get; set; }
     }
 }

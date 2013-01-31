@@ -44,4 +44,4 @@ function AddCompanyViewModel() {
     }, this);
 }
 
-ko.applyBindings(new AddCompanyViewModel(), $("#add-company")[0]);
+ko.applyBindings(new AddCompanyViewModel(), $("#company-form")[0]);

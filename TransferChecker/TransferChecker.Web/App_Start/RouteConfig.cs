@@ -14,6 +14,12 @@ namespace TransferChecker.Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "AddBattalion",
+                url: "AddBattalion",
+                defaults: new { controller = "Admin", action = "AddBattalion" }
+            );
+
+            routes.MapRoute(
                 name: "AddStation",
                 url: "AddStation",
                 defaults: new { controller = "Admin", action = "AddStation" }
